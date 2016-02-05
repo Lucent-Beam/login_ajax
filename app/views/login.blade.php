@@ -36,9 +36,9 @@
            </div>
 
         </form>
-        <div type="hidden" id="loader">
-            <label for="">Cargando</label>
-        </div>
+
+            <img src="img/loading.gif" alt="" style="display:none" id="loader" class="pull-right"/>
+      
 
 
       </div>
