@@ -17,16 +17,23 @@
       <div class="col-md-6">
         <br>
         <h3>Login</h3>
-        <form id="login_form" action="{{ URL::to('user/login')}}" method="post">
+
+        <div id="fdk" style="display:none">
+          <a class="close" data-dimiss="alert" aria-hidden="true">&times;</a>
+          <span id="msg"></span>
+        </div>
+
+
+        <form id="login_form" action="{{ URL::to('user/login')}}" method="POST">
           <!--Email-->
           <div class="form-group">
             <label for="inputEmail">Username </label>
-            <input type="text" class="form-control" id="inputEmail" name="username" placeholder="Username">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
            </div>
 
            <div class="form-group">
              <label for="inputPassword">Password </label>
-             <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+             <input type="password" class="form-control" name="password" id="password" placeholder="Password">
            </div>
 
            <div class="">
@@ -38,7 +45,7 @@
         </form>
 
             <img src="img/loading.gif" alt="" style="display:none" id="loader" class="pull-right"/>
-      
+
 
 
       </div>
@@ -73,21 +80,50 @@
       }
 
 
+      function redirect(url){
+        window.location = url;
+
+      }
+
+
 
         $(document).ready(function(){
             $('#loader').hide();
-            $('#sign_in').on('click',function(){
 
-                loader('on');
+
+            $('#sign_in').on('click',function(){
 
                 var login_form = $('#login_form').serializeArray(); // ("name"= "username", "value": "")
                 var url         = $('#login_form').attr('action');
 
-                alert(url);
-
+                //alert(url);
+              loader('on');
                $.post(url, login_form,function(data){
+                    //alert(data);
+                    loader('off');
+
+                    if(data =="fail"){
+                      $('#fdk').addClass('alert alert-danger').fadeIn(1000, function(){
+                          $(this).hide();
+                      });
+                      $('#msg').text('Invalid User');
+
+                      $.each(login_form, function(i,k){
+                          $('#' + k.name).val('');
+                      });
 
 
+                    }
+
+                    else {
+
+                      $('#fdk').addClass('alert alert-success').fadeIn(3000, function(){
+                          $(this).hide();
+                      });
+                      $('#msg').text('Successfuly logged in .... redictecting  ');
+                      //redirect('dashboard');
+
+                    }
 
                });
 

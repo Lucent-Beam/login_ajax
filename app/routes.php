@@ -15,3 +15,9 @@ Route::get('/', function()
 {
 	return View::make('login');
 });
+
+Route::get('user/login', 'UserController@login');
+
+Route::post('user/login', 'UserController@do_login');
+
+Route::get('dashboard','UserController@dashboard');
